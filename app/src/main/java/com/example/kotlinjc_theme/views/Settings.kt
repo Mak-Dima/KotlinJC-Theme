@@ -1,4 +1,4 @@
-package com.example.kotlinjc_theme
+package com.example.kotlinjc_theme.views
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,18 +9,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 
 @Composable
-fun Data() {
+fun Settings() {
     Box(
         modifier = Modifier
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "Data")
+        Text(text = "Settings")
     }
 }
 
 @PreviewScreenSizes
 @Composable
-fun DataPreview() {
-    Data()
+fun SettingsPreview() {
+    Settings()
 }

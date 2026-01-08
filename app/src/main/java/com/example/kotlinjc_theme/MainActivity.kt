@@ -11,6 +11,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.kotlinjc_theme.ui.theme.KotlinJCThemeTheme
+import com.example.kotlinjc_theme.views.Data
+import com.example.kotlinjc_theme.views.MenuBar
+import com.example.kotlinjc_theme.views.Settings
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

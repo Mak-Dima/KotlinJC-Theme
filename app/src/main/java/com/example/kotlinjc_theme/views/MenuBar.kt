@@ -1,4 +1,4 @@
-package com.example.kotlinjc_theme
+package com.example.kotlinjc_theme.views
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.NavigationBar
@@ -13,6 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.kotlinjc_theme.AppRoute
+import com.example.kotlinjc_theme.Data
+import com.example.kotlinjc_theme.Settings
 
 @Composable
 fun MenuBar( navController: NavController) {
