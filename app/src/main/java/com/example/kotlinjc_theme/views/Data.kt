@@ -31,6 +31,7 @@ remaining essentially unchanged.
 It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
 and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
     """.trimIndent()
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -38,21 +39,10 @@ and more recently with desktop publishing software like Aldus PageMaker includin
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically)
     ) {
-        Button(
-            modifier = Modifier
-                .fillMaxWidth(),
-            border = BorderStroke(1.dp, Color.Blue),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Transparent,
-                contentColor = Color.Blue
-            ),
-            onClick = { print("UP") }
-        )
-        {
-            Text(
-                "Up",
-                fontSize = 20.sp
-            )
+        StyledButton(
+            "Up"
+        ) {
+           print("UP")
         }
 
         Surface(
@@ -71,22 +61,12 @@ and more recently with desktop publishing software like Aldus PageMaker includin
             )
         }
 
-        Button(
-            modifier = Modifier
-                .fillMaxWidth(),
-            border = BorderStroke(1.dp, Color.Blue),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Transparent,
-                contentColor = Color.Blue
-            ),
-            onClick = { print("DOWN") }
-        )
-        {
-            Text(
-                "Down",
-                fontSize = 20.sp
-            )
+        StyledButton(
+            "Down"
+        ) {
+            print("DOWN")
         }
+
     }
 }
 
