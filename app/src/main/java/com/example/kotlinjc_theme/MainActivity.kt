@@ -6,6 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,8 +26,9 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val navController = rememberNavController()
+            var isDarkTheme by remember { mutableStateOf(false) }
 
-            KotlinJCThemeTheme {
+            KotlinJCThemeTheme(darkTheme = isDarkTheme) {
                 Scaffold(
                     bottomBar = {
                         MenuBar(navController)
@@ -35,7 +40,10 @@ class MainActivity : ComponentActivity() {
                         startDestination = Data
                     ) {
                         composable<Data>{ Data() }
-                        composable<Settings>{ Settings() }
+                        composable<Settings>{ Settings(
+                            isDarkTheme = isDarkTheme,
+                            {isDarkTheme = !isDarkTheme}
+                        ) }
                     }
                 }
             }

@@ -16,7 +16,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Settings() {
+fun Settings(
+    isDarkTheme: Boolean,
+    onThemeUpdate: () -> Unit
+) {
     val themes = listOf("Light", "Dark")
 
     Column(
@@ -40,8 +43,8 @@ fun Settings() {
 
             ) {
                 RadioButton(
-                    selected = index == 0,
-                    onClick = { /*TODO*/ }
+                    selected = (isDarkTheme && index == 1) || (!isDarkTheme && index == 0),
+                    onClick = { onThemeUpdate() }
                 )
                 Text(
                     text = theme,
@@ -55,5 +58,5 @@ fun Settings() {
 @PreviewScreenSizes
 @Composable
 fun SettingsPreview() {
-    Settings()
+    Settings(false,{})
 }
