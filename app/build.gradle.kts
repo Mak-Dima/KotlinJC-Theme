@@ -44,6 +44,11 @@ android {
 }
 
 dependencies {
+    // Preferences DataStore (SharedPreferences like APIs)
+    implementation(libs.androidx.datastore.preferences)
+
+    // Alternatively - without an Android dependency.
+    implementation(libs.androidx.datastore.preferences.core)
 
     implementation(libs.androidx.navigation.compose)
     // Jetpack Compose integration
