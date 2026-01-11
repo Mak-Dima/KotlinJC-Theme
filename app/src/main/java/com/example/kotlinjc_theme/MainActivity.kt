@@ -40,10 +40,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = Data
                     ) {
                         composable<Data>{ Data() }
-                        composable<Settings>{ Settings(
-                            isDarkTheme = isDarkTheme,
-                            {isDarkTheme = !isDarkTheme}
-                        ) }
+                        composable<Settings>{ Settings(isDarkTheme, {isDarkTheme = !isDarkTheme}) }
                     }
                 }
             }
