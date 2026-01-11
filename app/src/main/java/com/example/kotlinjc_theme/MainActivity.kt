@@ -5,22 +5,21 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.kotlinjc_theme.dataStore
 import com.example.kotlinjc_theme.ui.theme.KotlinJCThemeTheme
 import com.example.kotlinjc_theme.views.Data
 import com.example.kotlinjc_theme.views.MenuBar
@@ -64,19 +63,20 @@ fun MainContent(context: Context) {
             bottomBar = {
                 MenuBar(navController)
             },
-            modifier = Modifier.fillMaxSize()
         ) { innerPadding ->
-            NavHost(
-                navController = navController,
-                startDestination = Data
-            ) {
-                composable<Data> { Data() }
-                composable<Settings> {
-                    Settings(
-                        isDarkTheme
-                    ) {
-                        {isDarkTheme = !isDarkTheme}
-                        updateTheme(context, !isDarkTheme)
+            Box(modifier = Modifier.padding(innerPadding)) {
+                NavHost(
+                    navController = navController,
+                    startDestination = Data
+                ) {
+                    composable<Data> { Data() }
+                    composable<Settings> {
+                        Settings(
+                            isDarkTheme
+                        ) {
+                            isDarkTheme = !isDarkTheme
+                            updateTheme(context, !isDarkTheme)
+                        }
                     }
                 }
             }
@@ -87,5 +87,5 @@ fun MainContent(context: Context) {
 @PreviewScreenSizes
 @Composable
 fun MainActivityPreview() {
-    MainContent(MainActivity())
+    MainContent(LocalContext.current)
 }
