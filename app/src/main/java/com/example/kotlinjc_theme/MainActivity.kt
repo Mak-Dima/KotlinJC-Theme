@@ -1,16 +1,18 @@
 package com.example.kotlinjc_theme
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -18,6 +20,20 @@ import com.example.kotlinjc_theme.ui.theme.KotlinJCThemeTheme
 import com.example.kotlinjc_theme.views.Data
 import com.example.kotlinjc_theme.views.MenuBar
 import com.example.kotlinjc_theme.views.Settings
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
+
+val IS_DARK_THEME = booleanPreferencesKey("is_dark_theme")
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
+fun updateTheme(context: Context, isDarkTheme: Boolean) {
+    runBlocking {
+        context.dataStore.updateData { preferences ->
+            preferences.toMutablePreferences()
+                .apply { this[IS_DARK_THEME] = isDarkTheme }
+        }
+    }
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +42,10 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val navController = rememberNavController()
-            var isDarkTheme by remember { mutableStateOf(false) }
+            val isDarkThemeStored = dataStore.data.map { preferences ->
+                    preferences[IS_DARK_THEME] ?: false
+            }
+            var isDarkTheme = isDarkThemeStored.collectAsState(initial = false).value
 
             KotlinJCThemeTheme(darkTheme = isDarkTheme) {
                 Scaffold(
@@ -39,8 +58,16 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Data
                     ) {
-                        composable<Data>{ Data() }
-                        composable<Settings>{ Settings(isDarkTheme, {isDarkTheme = !isDarkTheme}) }
+                        composable<Data> { Data() }
+                        composable<Settings> {
+                            Settings(
+                                isDarkTheme,
+                                {
+                                    isDarkTheme = !isDarkTheme
+                                    updateTheme(this@MainActivity, isDarkTheme)
+                                }
+                            )
+                        }
                     }
                 }
             }
